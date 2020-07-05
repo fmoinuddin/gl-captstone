@@ -1,0 +1,6 @@
+com\konnect\KonnectGrievanceController.class
+com\konnect\KonnectDynamo.class
+com\konnect\KonnectApplication.class
+com\konnect\model\ErrorModel.class
+com\konnect\KonnectSolutionController.class
+com\konnect\KonnectHomeController.class

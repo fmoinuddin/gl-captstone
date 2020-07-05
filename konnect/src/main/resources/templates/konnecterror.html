@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+<link data-th-href="@{/css/main.css?{id}(id=${timestamp})}" rel="stylesheet">
+<title>Smart Konnector</title>
+
+<style>
+table {
+  font-family: 10px Arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #351c75;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color:#06C258;
+}
+div
+{
+    color: #06C258;
+}
+</style>
+</head>
+
+<body style="background-color:white;">
+
+<ul>
+  
+  <li class="active"><a href="http://localhost:8082/Konnect/konnecterror">Customer Errors</a></li>
+  <li><a href="http://localhost:8082/Konnect/fixed">Fixed</a></li>
+  <li><a href="http://localhost:8082/Konnect/solution">Solution</a></li>
+  <li style="float:right"><a class="active" href="http://localhost:8082/Konnect/about">About</a></li>
+</ul>
+
+<H2><div align = center>Customer Errors</div></H2>
+<main role="main" class="container">
+    <div class="starter-template">
+       <div align = center><i><p th:text="${msg}">Default text.</p></i></div>
+    </div>
+</main>
+
+<table>
+            <thead>
+                <tr>
+                    <th> Error Id</th>
+                    <th> Description</th>
+                    <th> Category </th>
+                    <th> Reported By</th>
+                    <th> Customer Name</th>
+                    <th> Reported Date</th>
+                    <th> Integrate with Jira </th>
+                </tr>
+            </thead>
+            <tbody>
+    		<tr th:if="${error_tbls.empty}">
+         	   <td colspan="2"> No Errors Available </td>
+        	</tr>
+        	<tr th:each="error_tbl : ${error_tbls}">
+         	   <td><span th:text="${error_tbl.error_id}"> Error Id </span></td>
+         	   <td><span th:text="${error_tbl.error_description}"> Description </span></td>
+          	  <td><span th:text="${error_tbl.error_category}"> Category </span></td>
+          	  <td><span th:text="${error_tbl.reported_by}"> Reported By </span></td>
+          	  <td><span th:text="${error_tbl.customer_name}"> Customer Name </span></td>
+          	  <td><span th:text="${error_tbl.reported_date}"> Reported Date </span></td>
+          	  <form action="/Konnect/updatejiraerror" method="post">
+          	    <input type="hidden" th:name = 'error_id' th:value="${error_tbl.error_id}">
+          	  	<td><input type="submit" name="Jira" value="Integrate with Jira"></td>
+          	  </form>
+        	</tr>
+    </tbody>
+ </table>
+ <div align="right">
+ <input type="button" id="Next" th:value="Next">
+ <input type="reset" id="resetButton" name="reset" th:value="Home"/>
+ </div>
+<script data-th-src="@{/js/main.js}"></script>
+</body>
+</html>
