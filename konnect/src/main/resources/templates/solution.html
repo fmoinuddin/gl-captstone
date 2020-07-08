@@ -84,11 +84,12 @@ div
                     <th> Reported Date</th>
                     <th> Solution</th>
                     <th> Update </th>
+                    <th> Delete </th>
                 </tr>
             </thead>
             <tbody>
     		<tr th:if="${error_tbls.empty}">
-         	   <td colspan="2"> No Errors Available </td>
+         	   <td colspan="9"> No Errors Available </td>
         	</tr>
         	<tr th:each="error_tbl : ${error_tbls}">
        		  <td><span th:text="${error_tbl.error_id}"> Error Id </span></td>
@@ -98,16 +99,30 @@ div
           	  <td><span th:text="${error_tbl.customer_name}"> Customer Name </span></td>
           	  <td><span th:text="${error_tbl.reported_date}"> Reported Date </span></td>
           	  <form action="/Konnect/updatesolutionsolution" method="post">
+          	  	  <input type="hidden" th:name = 'page_num' th:value="${page_num}">
          	 	  <td><input type="text" th:value = "${error_tbl.solution}" th:name="Solution"><input type="hidden" th:name = 'error_id' th:value="${error_tbl.error_id}"></td>
           		  <td><input type="submit" name="RDS" value="Update"></td>
+          	  </form>
+          	  <form action="/Konnect/deletesolution" method="post">
+          	  	 <input type="hidden" th:name = 'page_num' th:value="${page_num}">
+          	 	 <td><input type="hidden" th:name = 'error_id' th:value="${error_tbl.error_id}">
+          	 	 <input type="submit" name="Delete" value="Delete"></td>
           	  </form>
         	</tr>
     </tbody>
  </table>
  <div align="right">
- <input type="button" id="Next" th:value="Next">
- <input type="reset" id="resetButton" name="reset" th:value="Home"/>
- </div>
+ <table>
+<tr> <form action="/Konnect/solution" method="post">
+ 	 <input type="hidden" th:name = 'page_num' th:value="${page_num}-1">
+	 <input type="submit" name="Previous" th:value="Previous">&nbsp;&nbsp;&nbsp;
+ </form>
+ <form action="/Konnect/solution" method="post">
+  	 <input type="hidden" th:name = 'page_num' th:value="${page_num}+1">
+	 <input type="submit" name="Next" th:value="Next">&nbsp;&nbsp;&nbsp;
+ </form> </tr>
+</table>
+</div>
 <script data-th-src="@{/js/main.js}"></script>
 </body>
 </html>
